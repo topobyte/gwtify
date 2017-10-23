@@ -17,13 +17,15 @@
 
 package de.topobyte.gwtify;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.zip.ZipException;
 
 public class GwtifyJar
 {
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws ZipException, IOException
 	{
 		if (args.length != 2) {
 			System.out.println("usage: gwtify <input> <output>");

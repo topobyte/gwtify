@@ -17,16 +17,43 @@
 
 package de.topobyte.gwtify;
 
+import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
 public class Gwtifier
 {
 
-	public void gwtify(Path input, Path output)
+	public void gwtify(Path input, Path output) throws ZipException,
+			IOException
 	{
 		System.out.println(String.format("Gwtifing \"%s\" → \"%s\"", input,
 				output));
-		// TODO: implement this
+
+		Set<Path> roots = new HashSet<>();
+
+		ZipFile zip = new ZipFile(input.toFile());
+		Enumeration<? extends ZipEntry> entries = zip.entries();
+		while (entries.hasMoreElements()) {
+			ZipEntry entry = entries.nextElement();
+			if (entry.isDirectory()) {
+				Path p = Paths.get(entry.getName());
+				roots.add(p.getName(0));
+			}
+		}
+		zip.close();
+
+		roots.remove(Paths.get("META-INF"));
+
+		for (Path path : roots) {
+			System.out.println("root: " + path);
+		}
 	}
 
 }
