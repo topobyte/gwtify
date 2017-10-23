@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DIR=$(dirname $0)
+CMD="$DIR/gwtify.sh"
+CLASS="de.topobyte.gwtify.GwtifyJar"
+
+exec "$CMD" "$CLASS" "$@"
